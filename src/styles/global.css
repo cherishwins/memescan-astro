@@ -1,0 +1,352 @@
+@import "tailwindcss";
+
+/* ============================================
+   MEMESCAN GLOBAL STYLES
+   Layer 0: Pure CSS, works without JavaScript
+   ============================================ */
+
+/* Custom dark variant for Tailwind */
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   CSS VARIABLES - Terminal/Matrix Aesthetic
+   ============================================ */
+:root {
+  /* Light theme (fallback) */
+  --background: oklch(0.98 0.01 145);
+  --foreground: oklch(0.12 0.02 145);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.02 145);
+  --primary: oklch(0.7 0.22 145);
+  --primary-foreground: oklch(0.1 0 0);
+  --secondary: oklch(0.92 0.02 180);
+  --secondary-foreground: oklch(0.12 0 0);
+  --muted: oklch(0.95 0.01 145);
+  --muted-foreground: oklch(0.5 0.02 145);
+  --accent: oklch(0.7 0.15 200);
+  --accent-foreground: oklch(0.12 0 0);
+  --destructive: oklch(0.55 0.25 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.88 0.02 145);
+  --input: oklch(0.88 0.02 145);
+  --ring: oklch(0.7 0.22 145);
+
+  /* Chart colors */
+  --chart-1: oklch(0.7 0.22 145);  /* Neon green */
+  --chart-2: oklch(0.7 0.15 200);  /* Cyan */
+  --chart-3: oklch(0.6 0.25 25);   /* Red */
+  --chart-4: oklch(0.65 0.18 180); /* Teal */
+  --chart-5: oklch(0.8 0.18 85);   /* Gold */
+
+  --radius: 0.5rem;
+
+  /* Telegram viewport */
+  --tg-viewport-height: 100vh;
+  --tg-viewport-stable-height: 100vh;
+}
+
+.dark {
+  /* Dark terminal theme - Matrix/TON aesthetic */
+  --background: oklch(0.06 0.02 145);
+  --foreground: oklch(0.85 0.15 145);
+  --card: oklch(0.08 0.025 145);
+  --card-foreground: oklch(0.85 0.15 145);
+  --primary: oklch(0.75 0.25 145);
+  --primary-foreground: oklch(0.08 0 0);
+  --secondary: oklch(0.15 0.03 145);
+  --secondary-foreground: oklch(0.85 0.15 145);
+  --muted: oklch(0.12 0.02 145);
+  --muted-foreground: oklch(0.5 0.1 145);
+  --accent: oklch(0.65 0.18 200);
+  --accent-foreground: oklch(0.08 0 0);
+  --destructive: oklch(0.6 0.28 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.18 0.04 145);
+  --input: oklch(0.18 0.04 145);
+  --ring: oklch(0.75 0.25 145);
+
+  /* Neon chart colors */
+  --chart-1: oklch(0.75 0.25 145);
+  --chart-2: oklch(0.7 0.18 200);
+  --chart-3: oklch(0.65 0.28 25);
+  --chart-4: oklch(0.7 0.2 180);
+  --chart-5: oklch(0.85 0.2 85);
+}
+
+/* ============================================
+   TAILWIND THEME MAPPING
+   ============================================ */
+@theme inline {
+  --font-sans: 'Space Mono', 'Courier New', monospace;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --font-display: 'Orbitron', 'Space Mono', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    height: 100%;
+    height: var(--tg-viewport-stable-height, 100vh);
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+/* ============================================
+   ANIMATIONS - CSS-only, no JS required
+   ============================================ */
+@layer base {
+  /* Ticker scroll animation */
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-ticker {
+    animation: ticker 60s linear infinite;
+  }
+
+  .hover\:animation-pause:hover {
+    animation-play-state: paused;
+  }
+
+  /* Neon glow pulse */
+  @keyframes neon-pulse {
+    0%, 100% {
+      box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 20px var(--primary);
+    }
+    50% {
+      box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary);
+    }
+  }
+
+  .neon-glow {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  /* Text glow effect */
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+
+  /* Slide up entrance */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out forwards;
+  }
+
+  /* Fade in */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+
+  /* Pulse for live indicators */
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .animate-live {
+    animation: live-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+@layer utilities {
+  /* Container */
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Card styling */
+  .card-terminal {
+    @apply bg-card border border-border rounded-lg p-4;
+    @apply transition-all duration-200;
+  }
+
+  .card-terminal:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+  }
+
+  /* Button base */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-4 py-2 rounded-md font-medium;
+    @apply transition-all duration-200;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground;
+    @apply hover:opacity-90;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-secondary/80;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-secondary;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-chart-1/20 text-chart-1;
+  }
+
+  .badge-danger {
+    @apply bg-destructive/20 text-destructive;
+  }
+
+  .badge-warning {
+    @apply bg-chart-5/20 text-chart-5;
+  }
+
+  /* Status indicator */
+  .status-live {
+    @apply inline-flex items-center gap-1.5 text-xs font-bold text-chart-1;
+  }
+
+  .status-live::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--chart-1);
+    animation: live-pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--primary), var(--accent));
+  }
+
+  /* Terminal cursor blink */
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .cursor-blink::after {
+    content: '_';
+    animation: cursor-blink 1s step-end infinite;
+  }
+}
+
+/* ============================================
+   RESPONSIVE SAFE AREAS
+   ============================================ */
+@media (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION - Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-ticker {
+    animation: none;
+  }
+}

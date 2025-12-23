@@ -1,0 +1,84 @@
+---
+/**
+ * TokenCard Component - Layer 0 (Static HTML)
+ * Displays token info with safety score
+ */
+
+interface Props {
+  name: string
+  symbol: string
+  price: string
+  change: number
+  volume?: string
+  marketCap?: string
+  safetyScore?: number
+  isNew?: boolean
+  isTrending?: boolean
+}
+
+const {
+  name,
+  symbol,
+  price,
+  change,
+  volume,
+  marketCap,
+  safetyScore = 0,
+  isNew = false,
+  isTrending = false,
+} = Astro.props
+
+const isPositive = change >= 0
+const safetyColor = safetyScore >= 80 ? 'text-chart-1' : safetyScore >= 50 ? 'text-chart-5' : 'text-destructive'
+const safetyLabel = safetyScore >= 80 ? 'SAFE' : safetyScore >= 50 ? 'CAUTION' : 'RISKY'
+---
+
+<article class="card-terminal group cursor-pointer">
+  <div class="flex items-start justify-between mb-3">
+    <div class="flex items-center gap-3">
+      <!-- Token avatar placeholder -->
+      <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-lg">
+        {symbol.charAt(0)}
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h3 class="font-bold text-sm">{name}</h3>
+          {isNew && <span class="badge badge-warning">NEW</span>}
+          {isTrending && <span class="badge badge-success">🔥</span>}
+        </div>
+        <p class="text-xs text-muted-foreground">${symbol}</p>
+      </div>
+    </div>
+
+    <!-- Safety Score -->
+    <div class={`text-right ${safetyColor}`}>
+      <div class="text-xs font-bold">{safetyLabel}</div>
+      <div class="text-lg font-mono">{safetyScore}%</div>
+    </div>
+  </div>
+
+  <!-- Price & Change -->
+  <div class="flex items-end justify-between">
+    <div>
+      <p class="text-xs text-muted-foreground">Price</p>
+      <p class="text-lg font-bold font-mono">{price}</p>
+    </div>
+    <div class="text-right">
+      <p class="text-xs text-muted-foreground">24h</p>
+      <p class:list={[
+        'text-lg font-bold font-mono',
+        isPositive ? 'text-chart-1' : 'text-destructive'
+      ]}>
+        {isPositive ? '+' : ''}{change.toFixed(2)}%
+      </p>
+    </div>
+  </div>
+
+  <!-- Volume & Market Cap -->
+  {(volume || marketCap) && (
+    <div class="flex justify-between mt-3 pt-3 border-t border-border text-xs text-muted-foreground">
+      {volume && <span>Vol: {volume}</span>}
+      {marketCap && <span>MCap: {marketCap}</span>}
+    </div>
+  )}
+</article>

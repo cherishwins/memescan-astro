@@ -1,0 +1,73 @@
+---
+/**
+ * HeroBanner Component - Layer 0 (Static HTML)
+ * Main CTA section
+ */
+
+interface Props {
+  title?: string
+  subtitle?: string
+}
+
+const {
+  title = 'SCAN. ANALYZE. PROFIT.',
+  subtitle = 'Real-time intelligence for TON meme tokens'
+} = Astro.props
+---
+
+<section class="relative overflow-hidden py-12 md:py-20">
+  <!-- Background gradient -->
+  <div class="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none"></div>
+
+  <div class="container-app relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Main title -->
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4"
+        style="font-family: var(--font-display);"
+      >
+        <span class="text-primary text-glow">{title}</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-muted-foreground mb-8 max-w-xl mx-auto">
+        {subtitle}
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="https://t.me/MemeScanTON_bot"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary text-lg px-8 py-4 neon-glow"
+        >
+          🔍 LAUNCH SCANNER
+        </a>
+        <a
+          href="https://x.com/MemeSealTON"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-secondary text-lg px-8 py-4"
+        >
+          𝕏 FOLLOW UPDATES
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto">
+        <div class="text-center">
+          <p class="text-2xl sm:text-3xl font-bold text-primary font-mono">2,847</p>
+          <p class="text-xs text-muted-foreground">Tokens Scanned</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl sm:text-3xl font-bold text-destructive font-mono">127</p>
+          <p class="text-xs text-muted-foreground">Rugs Detected</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl sm:text-3xl font-bold text-chart-1 font-mono">48</p>
+          <p class="text-xs text-muted-foreground">Gems Found</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

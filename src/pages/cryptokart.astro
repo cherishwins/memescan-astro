@@ -1,0 +1,77 @@
+---
+/**
+ * CryptoKart Page - Racing Game
+ *
+ * Layer 0: Static HTML layout
+ * Layer 1: React Islands (Game, Leaderboard)
+ * Layer 2: Three.js (Victory effects - future)
+ */
+import Base from '../layouts/Base.astro'
+import Header from '../components/static/Header.astro'
+import Footer from '../components/static/Footer.astro'
+
+// Layer 1: React Islands
+import CryptoKartGame from '../components/islands/CryptoKartGame'
+import Leaderboard from '../components/islands/Leaderboard'
+
+// Layer 2: Magic
+import MatrixRain from '../components/magic/MatrixRain'
+---
+
+<Base title="CryptoKart">
+  <!-- Layer 2: Ambient magic -->
+  <MatrixRain client:idle />
+
+  <div class="min-h-screen flex flex-col relative z-10">
+    <!-- Layer 0: Static Header -->
+    <Header currentPath="/cryptokart" />
+
+    <main class="flex-1 container-app py-8">
+      <!-- Page header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl sm:text-4xl font-black mb-2" style="font-family: var(--font-display);">
+          <span class="text-chart-5">🏎️</span> CRYPTOKART
+        </h1>
+        <p class="text-muted-foreground">Race against degens. Win big. WAGMI.</p>
+      </div>
+
+      <!-- Game Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Game Area -->
+        <div class="lg:col-span-2">
+          <CryptoKartGame client:load />
+        </div>
+
+        <!-- Leaderboard -->
+        <div>
+          <Leaderboard client:idle />
+        </div>
+      </div>
+
+      <!-- How to Play -->
+      <section class="mt-8 card-terminal">
+        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+          <span class="text-2xl">📖</span>
+          HOW TO PLAY
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+          <div class="p-3 rounded-lg bg-muted/30">
+            <div class="text-primary font-bold mb-1">1. PLACE YOUR BET</div>
+            <p class="text-muted-foreground">Choose how many points to wager. Higher bets = higher rewards!</p>
+          </div>
+          <div class="p-3 rounded-lg bg-muted/30">
+            <div class="text-primary font-bold mb-1">2. START THE RACE</div>
+            <p class="text-muted-foreground">Hit start and watch the countdown. Your racer has a slight edge!</p>
+          </div>
+          <div class="p-3 rounded-lg bg-muted/30">
+            <div class="text-primary font-bold mb-1">3. USE YOUR BOOST</div>
+            <p class="text-muted-foreground">Time your boost wisely - you only get one per race!</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Layer 0: Static Footer -->
+    <Footer />
+  </div>
+</Base>

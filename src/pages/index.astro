@@ -1,16 +1,133 @@
 ---
+/**
+ * Home Page - MemeScan Scanner
+ *
+ * Layer 0: Static HTML (this file)
+ * Layer 1: React Islands (LiveTicker, etc.)
+ * Layer 2: Three.js (MatrixRain - ambient)
+ */
+import Base from '../layouts/Base.astro'
+import Header from '../components/static/Header.astro'
+import Footer from '../components/static/Footer.astro'
+import HeroBanner from '../components/static/HeroBanner.astro'
+import TokenCard from '../components/static/TokenCard.astro'
+import StatCard from '../components/static/StatCard.astro'
 
+// Layer 1: React Islands
+import LiveTicker from '../components/islands/LiveTicker'
+
+// Layer 2: Three.js Magic
+import MatrixRain from '../components/magic/MatrixRain'
+
+// Static data - in production, fetch at build time from API
+const trendingTokens = [
+  { name: 'PEPE TON', symbol: 'PEPE', price: '$0.00042', change: 15.4, safetyScore: 85, volume: '$1.2M', marketCap: '$4.2M', isTrending: true },
+  { name: 'Frog Coin', symbol: 'FROG', price: '$0.0012', change: -5.2, safetyScore: 72, volume: '$890K', marketCap: '$2.1M' },
+  { name: 'Moon Dog', symbol: 'MDOG', price: '$0.00089', change: 42.1, safetyScore: 45, volume: '$2.4M', marketCap: '$8.5M', isTrending: true },
+  { name: 'TON Cat', symbol: 'TCAT', price: '$0.0034', change: 8.7, safetyScore: 91, volume: '$560K', marketCap: '$1.8M' },
+  { name: 'Seal Token', symbol: 'SEAL', price: '$0.0156', change: 124.5, safetyScore: 88, volume: '$3.2M', marketCap: '$12.4M', isNew: true, isTrending: true },
+  { name: 'Rug Pull', symbol: 'RUG', price: '$0.00001', change: -89.2, safetyScore: 12, volume: '$45K', marketCap: '$120K' },
+]
+
+const newLaunches = [
+  { name: 'Galaxy Doge', symbol: 'GDOGE', price: '$0.00001', change: 0, safetyScore: 50, isNew: true },
+  { name: 'TON Wizard', symbol: 'TWIZ', price: '$0.00025', change: 15.2, safetyScore: 65, isNew: true },
+  { name: 'Meme Lord', symbol: 'MLORD', price: '$0.00008', change: -12.5, safetyScore: 38, isNew: true },
+]
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Scanner">
+  <!-- Layer 2: Ambient magic (loads on idle, respects motion prefs) -->
+  <MatrixRain client:idle />
+
+  <div class="min-h-screen flex flex-col relative z-10">
+    <!-- Layer 0: Static Header -->
+    <Header currentPath="/" />
+
+    <!-- Layer 1: Live Ticker (loads immediately, above fold) -->
+    <LiveTicker client:load />
+
+    <main class="flex-1">
+      <!-- Layer 0: Hero Banner -->
+      <HeroBanner />
+
+      <!-- Layer 0: Trending Tokens Grid -->
+      <section class="container-app py-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <span class="text-2xl">🔥</span>
+            TRENDING NOW
+          </h2>
+          <span class="status-live">LIVE</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {trendingTokens.map(token => (
+            <TokenCard {...token} />
+          ))}
+        </div>
+      </section>
+
+      <!-- Layer 0: Stats Section -->
+      <section class="container-app py-8 border-t border-border">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+          <span class="text-2xl">📊</span>
+          SCANNER STATS
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <StatCard label="Tokens Scanned" value="2,847" change={12} variant="default" />
+          <StatCard label="Rugs Detected" value="127" change={-5} variant="danger" />
+          <StatCard label="Gems Found" value="48" change={23} variant="success" />
+          <StatCard label="Active Users" value="1.2K" change={8} variant="default" />
+        </div>
+      </section>
+
+      <!-- Layer 0: New Launches -->
+      <section class="container-app py-8 border-t border-border">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <span class="text-2xl">🆕</span>
+            NEW LAUNCHES
+          </h2>
+          <a href="/crypto" class="text-sm text-primary hover:underline">View all →</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {newLaunches.map(token => (
+            <TokenCard {...token} />
+          ))}
+        </div>
+      </section>
+
+      <!-- Layer 0: Quick Actions -->
+      <section class="container-app py-8 border-t border-border">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <a href="/cryptokart" class="card-terminal text-center hover:border-chart-5/50 group">
+            <span class="text-3xl mb-2 block group-hover:scale-110 transition-transform">🎮</span>
+            <span class="font-bold text-sm">CRYPTOKART</span>
+            <p class="text-xs text-muted-foreground mt-1">Race & Win</p>
+          </a>
+          <a href="/rewards" class="card-terminal text-center hover:border-destructive/50 group">
+            <span class="text-3xl mb-2 block group-hover:scale-110 transition-transform">🔥</span>
+            <span class="font-bold text-sm">REWARDS</span>
+            <p class="text-xs text-muted-foreground mt-1">Earn Points</p>
+          </a>
+          <a href="/portfolio" class="card-terminal text-center hover:border-accent/50 group">
+            <span class="text-3xl mb-2 block group-hover:scale-110 transition-transform">📋</span>
+            <span class="font-bold text-sm">WATCHLIST</span>
+            <p class="text-xs text-muted-foreground mt-1">Track Tokens</p>
+          </a>
+          <a href="https://t.me/MemeScanTON_bot" target="_blank" class="card-terminal text-center hover:border-primary/50 group">
+            <span class="text-3xl mb-2 block group-hover:scale-110 transition-transform">🤖</span>
+            <span class="font-bold text-sm">TELEGRAM BOT</span>
+            <p class="text-xs text-muted-foreground mt-1">Scan on Mobile</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Layer 0: Static Footer -->
+    <Footer />
+  </div>
+</Base>

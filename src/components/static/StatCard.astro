@@ -1,0 +1,43 @@
+---
+/**
+ * StatCard Component - Layer 0 (Static HTML)
+ * Displays a single stat with label
+ */
+
+interface Props {
+  label: string
+  value: string | number
+  change?: number
+  icon?: string
+  variant?: 'default' | 'success' | 'warning' | 'danger'
+}
+
+const { label, value, change, icon, variant = 'default' } = Astro.props
+
+const variantColors = {
+  default: 'text-foreground',
+  success: 'text-chart-1',
+  warning: 'text-chart-5',
+  danger: 'text-destructive',
+}
+---
+
+<div class="card-terminal">
+  <div class="flex items-start justify-between">
+    <div>
+      <p class="text-xs text-muted-foreground uppercase tracking-wider">{label}</p>
+      <p class={`text-2xl font-bold font-mono mt-1 ${variantColors[variant]}`}>
+        {icon && <span class="mr-1">{icon}</span>}
+        {value}
+      </p>
+      {change !== undefined && (
+        <p class:list={[
+          'text-xs mt-1',
+          change >= 0 ? 'text-chart-1' : 'text-destructive'
+        ]}>
+          {change >= 0 ? '↑' : '↓'} {Math.abs(change)}% from yesterday
+        </p>
+      )}
+    </div>
+  </div>
+</div>

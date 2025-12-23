@@ -1,0 +1,64 @@
+---
+import { ViewTransitions } from 'astro:transitions'
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description = 'Bloomberg for Memes - TON Blockchain Scanner' } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="description" content={description} />
+
+  <!-- OG / Social -->
+  <meta property="og:title" content={`${title} | MemeScan`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+
+  <!-- Telegram Mini App SDK -->
+  <script is:inline src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script is:inline>
+    // Initialize Telegram Mini App
+    if (window.Telegram?.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+      tg.setBackgroundColor('#0a0a0f');
+      tg.setHeaderColor('#0a0a0f');
+
+      // Update CSS custom properties for viewport
+      document.documentElement.style.setProperty(
+        '--tg-viewport-height',
+        `${tg.viewportHeight}px`
+      );
+      document.documentElement.style.setProperty(
+        '--tg-viewport-stable-height',
+        `${tg.viewportStableHeight}px`
+      );
+    }
+  </script>
+
+  <title>{title} | MemeScan</title>
+  <ViewTransitions />
+</head>
+<body class="min-h-screen bg-background text-foreground font-mono antialiased">
+  <slot />
+</body>
+</html>

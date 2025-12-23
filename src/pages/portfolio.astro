@@ -1,0 +1,208 @@
+---
+/**
+ * Portfolio/Watchlist Page
+ *
+ * Layer 0: Static HTML layout with portfolio data
+ * Layer 1: React Islands (Charts, LiveTicker)
+ */
+import Base from '../layouts/Base.astro'
+import Header from '../components/static/Header.astro'
+import Footer from '../components/static/Footer.astro'
+import LiveTicker from '../components/islands/LiveTicker'
+import MatrixRain from '../components/magic/MatrixRain'
+
+// Static portfolio data
+const holdings = [
+  { name: 'TON', symbol: 'TON', amount: '125.5', value: '$307.48', price: '$2.45', change: 12.5, pnl: '+$34.21', pnlPercent: 12.5 },
+  { name: 'NOT', symbol: 'NOT', amount: '50,000', value: '$445.00', price: '$0.0089', change: 45.2, pnl: '+$138.50', pnlPercent: 45.2 },
+  { name: 'DOGS', symbol: 'DOGS', amount: '1,250,000', value: '$525.00', price: '$0.00042', change: -3.2, pnl: '-$17.36', pnlPercent: -3.2 },
+  { name: 'Seal Token', symbol: 'SEAL', amount: '10,000', value: '$156.00', price: '$0.0156', change: 124.5, pnl: '+$86.50', pnlPercent: 124.5 },
+]
+
+const watchlist = [
+  { name: 'Hamster Kombat', symbol: 'HMSTR', price: '$0.0037', change: 8.7, safetyScore: 78 },
+  { name: 'Catizen', symbol: 'CATI', price: '$0.0046', change: -1.2, safetyScore: 82 },
+  { name: 'PEPE TON', symbol: 'PTON', price: '$0.000012', change: 156.8, safetyScore: 45 },
+  { name: 'Jetton', symbol: 'JETTON', price: '$0.089', change: 15.6, safetyScore: 88 },
+]
+
+const totalValue = holdings.reduce((sum, h) => sum + parseFloat(h.value.replace('$', '').replace(',', '')), 0)
+const totalPnL = holdings.reduce((sum, h) => sum + parseFloat(h.pnl.replace('$', '').replace(',', '').replace('+', '')), 0)
+---
+
+<Base title="Portfolio">
+  <MatrixRain client:idle />
+
+  <div class="min-h-screen flex flex-col relative z-10">
+    <Header currentPath="/portfolio" />
+    <LiveTicker client:load />
+
+    <main class="flex-1 container-app py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl sm:text-4xl font-black mb-2" style="font-family: var(--font-display);">
+          <span class="text-primary">📋</span> PORTFOLIO COMMAND CENTER
+        </h1>
+        <p class="text-muted-foreground">Track gains, analyze performance, stack paper</p>
+      </div>
+
+      <!-- Portfolio Stats -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="card-terminal">
+          <div class="text-xs text-muted-foreground uppercase">Total Value</div>
+          <div class="text-2xl font-bold font-mono text-primary mt-1">${totalValue.toFixed(2)}</div>
+        </div>
+        <div class="card-terminal">
+          <div class="text-xs text-muted-foreground uppercase">24h P&L</div>
+          <div class:list={[
+            'text-2xl font-bold font-mono mt-1',
+            totalPnL >= 0 ? 'text-chart-1' : 'text-destructive'
+          ]}>
+            {totalPnL >= 0 ? '+' : ''}${totalPnL.toFixed(2)}
+          </div>
+        </div>
+        <div class="card-terminal">
+          <div class="text-xs text-muted-foreground uppercase">Holdings</div>
+          <div class="text-2xl font-bold font-mono mt-1">{holdings.length}</div>
+        </div>
+        <div class="card-terminal">
+          <div class="text-xs text-muted-foreground uppercase">Watchlist</div>
+          <div class="text-2xl font-bold font-mono mt-1">{watchlist.length}</div>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Holdings -->
+        <div class="lg:col-span-2">
+          <div class="card-terminal">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="text-2xl">💰</span>
+              YOUR HOLDINGS
+            </h2>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border text-muted-foreground text-left">
+                    <th class="pb-3 font-mono">TOKEN</th>
+                    <th class="pb-3 font-mono text-right">AMOUNT</th>
+                    <th class="pb-3 font-mono text-right">VALUE</th>
+                    <th class="pb-3 font-mono text-right">24H</th>
+                    <th class="pb-3 font-mono text-right">P&L</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {holdings.map(h => (
+                    <tr class="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                      <td class="py-3">
+                        <div class="flex items-center gap-2">
+                          <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-bold">
+                            {h.symbol.charAt(0)}
+                          </div>
+                          <div>
+                            <div class="font-bold">{h.name}</div>
+                            <div class="text-xs text-muted-foreground">${h.symbol}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="py-3 text-right font-mono">{h.amount}</td>
+                      <td class="py-3 text-right font-mono font-bold">{h.value}</td>
+                      <td class:list={[
+                        'py-3 text-right font-mono',
+                        h.change >= 0 ? 'text-chart-1' : 'text-destructive'
+                      ]}>
+                        {h.change >= 0 ? '+' : ''}{h.change}%
+                      </td>
+                      <td class:list={[
+                        'py-3 text-right font-mono font-bold',
+                        h.pnlPercent >= 0 ? 'text-chart-1' : 'text-destructive'
+                      ]}>
+                        {h.pnl}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Watchlist -->
+        <div>
+          <div class="card-terminal h-full">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="text-2xl">👀</span>
+              WATCHLIST
+            </h2>
+
+            <div class="space-y-3">
+              {watchlist.map(token => (
+                <div class="p-3 rounded-lg border border-border hover:border-primary/50 transition-colors cursor-pointer">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-bold">
+                        {token.symbol.charAt(0)}
+                      </div>
+                      <div>
+                        <div class="font-bold text-sm">{token.name}</div>
+                        <div class="text-xs text-muted-foreground">${token.symbol}</div>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-mono text-sm">{token.price}</div>
+                      <div class:list={[
+                        'text-xs font-mono',
+                        token.change >= 0 ? 'text-chart-1' : 'text-destructive'
+                      ]}>
+                        {token.change >= 0 ? '+' : ''}{token.change}%
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between text-xs">
+                    <span class="text-muted-foreground">Safety Score</span>
+                    <span class:list={[
+                      'font-bold',
+                      token.safetyScore >= 80 ? 'text-chart-1' : token.safetyScore >= 50 ? 'text-chart-5' : 'text-destructive'
+                    ]}>
+                      {token.safetyScore}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button class="w-full mt-4 btn btn-secondary text-sm">
+              + Add to Watchlist
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <section class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="https://t.me/MemeScanTON_bot" target="_blank" class="card-terminal text-center hover:border-primary/50 group">
+          <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">🔍</span>
+          <span class="font-bold text-sm">SCAN TOKEN</span>
+          <p class="text-xs text-muted-foreground mt-1">Check any address</p>
+        </a>
+        <a href="/crypto" class="card-terminal text-center hover:border-chart-5/50 group">
+          <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">📈</span>
+          <span class="font-bold text-sm">TRENDING</span>
+          <p class="text-xs text-muted-foreground mt-1">Hot tokens now</p>
+        </a>
+        <a href="/rewards" class="card-terminal text-center hover:border-destructive/50 group">
+          <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">🔥</span>
+          <span class="font-bold text-sm">REWARDS</span>
+          <p class="text-xs text-muted-foreground mt-1">Earn points</p>
+        </a>
+        <a href="/cryptokart" class="card-terminal text-center hover:border-accent/50 group">
+          <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">🎮</span>
+          <span class="font-bold text-sm">CRYPTOKART</span>
+          <p class="text-xs text-muted-foreground mt-1">Race & win</p>
+        </a>
+      </section>
+    </main>
+
+    <Footer />
+  </div>
+</Base>

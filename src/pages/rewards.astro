@@ -1,0 +1,145 @@
+---
+/**
+ * Rewards Page - Streak & Missions
+ *
+ * Layer 0: Static HTML layout
+ * Layer 1: React Islands (DailyStreak, DailyMissions)
+ * Layer 2: Three.js (Achievement effects - future)
+ */
+import Base from '../layouts/Base.astro'
+import Header from '../components/static/Header.astro'
+import Footer from '../components/static/Footer.astro'
+
+// Layer 1: React Islands
+import DailyStreak from '../components/islands/DailyStreak'
+import DailyMissions from '../components/islands/DailyMissions'
+
+// Layer 2: Magic
+import MatrixRain from '../components/magic/MatrixRain'
+---
+
+<Base title="Rewards">
+  <!-- Layer 2: Ambient magic -->
+  <MatrixRain client:idle />
+
+  <div class="min-h-screen flex flex-col relative z-10">
+    <!-- Layer 0: Static Header -->
+    <Header currentPath="/rewards" />
+
+    <main class="flex-1 container-app py-8">
+      <!-- Page header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl sm:text-4xl font-black mb-2" style="font-family: var(--font-display);">
+          <span class="text-destructive">🔥</span> REWARDS CENTER
+        </h1>
+        <p class="text-muted-foreground">Complete missions, maintain streaks, earn points!</p>
+      </div>
+
+      <!-- Streak Section -->
+      <section class="mb-8">
+        <DailyStreak client:idle />
+      </section>
+
+      <!-- Missions Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Daily Missions -->
+        <div>
+          <DailyMissions client:idle />
+        </div>
+
+        <!-- Stats & Rewards Summary -->
+        <div class="space-y-6">
+          <!-- Your Stats -->
+          <div class="card-terminal">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="text-2xl">📊</span>
+              YOUR STATS
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-3 rounded-lg bg-muted/30">
+                <div class="text-xs text-muted-foreground">Total Points</div>
+                <div class="text-2xl font-bold text-primary font-mono">4,850</div>
+              </div>
+              <div class="p-3 rounded-lg bg-muted/30">
+                <div class="text-xs text-muted-foreground">Global Rank</div>
+                <div class="text-2xl font-bold text-chart-5 font-mono">#42</div>
+              </div>
+              <div class="p-3 rounded-lg bg-muted/30">
+                <div class="text-xs text-muted-foreground">Missions Done</div>
+                <div class="text-2xl font-bold font-mono">127</div>
+              </div>
+              <div class="p-3 rounded-lg bg-muted/30">
+                <div class="text-xs text-muted-foreground">Best Streak</div>
+                <div class="text-2xl font-bold text-destructive font-mono">14</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral Section -->
+          <div class="card-terminal">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="text-2xl">🤝</span>
+              INVITE FRIENDS
+            </h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Earn 100 points for each friend who joins! They get 50 points too.
+            </p>
+            <div class="flex gap-2">
+              <input
+                type="text"
+                value="https://t.me/MemeScanTON_bot?start=ref_yourcode"
+                readonly
+                class="flex-1 px-3 py-2 rounded-md bg-muted border border-border text-sm font-mono"
+              />
+              <button class="px-4 py-2 bg-primary text-primary-foreground rounded-md font-bold hover:opacity-90 transition-all">
+                COPY
+              </button>
+            </div>
+          </div>
+
+          <!-- Reward Tiers -->
+          <div class="card-terminal">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="text-2xl">🏆</span>
+              REWARD TIERS
+            </h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-2 rounded bg-primary/20 border border-primary">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥉</span>
+                  <span class="font-bold">Bronze</span>
+                </div>
+                <span class="text-sm text-muted-foreground">0 - 999 pts</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-muted/30 border border-border">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥈</span>
+                  <span class="font-bold">Silver</span>
+                </div>
+                <span class="text-sm text-muted-foreground">1,000 - 4,999 pts</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-chart-5/20 border border-chart-5">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥇</span>
+                  <span class="font-bold text-chart-5">Gold</span>
+                  <span class="text-xs bg-chart-5 text-background px-1 rounded">YOU</span>
+                </div>
+                <span class="text-sm text-muted-foreground">5,000 - 24,999 pts</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-muted/30 border border-border opacity-50">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">💎</span>
+                  <span class="font-bold">Diamond</span>
+                </div>
+                <span class="text-sm text-muted-foreground">25,000+ pts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Layer 0: Static Footer -->
+    <Footer />
+  </div>
+</Base>

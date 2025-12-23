@@ -1,0 +1,115 @@
+---
+/**
+ * Crypto/Trending Page
+ *
+ * Layer 0: Static HTML layout with trending tokens
+ * Layer 1: React Islands (LiveTicker, Charts - future)
+ */
+import Base from '../layouts/Base.astro'
+import Header from '../components/static/Header.astro'
+import Footer from '../components/static/Footer.astro'
+import TokenCard from '../components/static/TokenCard.astro'
+import LiveTicker from '../components/islands/LiveTicker'
+import MatrixRain from '../components/magic/MatrixRain'
+
+// Static trending data
+const trendingTokens = [
+  { name: 'TON', symbol: 'TON', price: '$2.45', change: 12.5, safetyScore: 98, volume: '$124M', marketCap: '$8.4B', isTrending: true },
+  { name: 'NOT', symbol: 'NOT', price: '$0.0089', change: 45.2, safetyScore: 85, volume: '$42M', marketCap: '$890M', isTrending: true },
+  { name: 'DOGS', symbol: 'DOGS', price: '$0.00042', change: -3.2, safetyScore: 72, volume: '$18M', marketCap: '$420M' },
+  { name: 'Hamster Kombat', symbol: 'HMSTR', price: '$0.0037', change: 8.7, safetyScore: 78, volume: '$12M', marketCap: '$370M' },
+  { name: 'Catizen', symbol: 'CATI', price: '$0.0046', change: -1.2, safetyScore: 82, volume: '$8.5M', marketCap: '$460M' },
+  { name: 'PEPE TON', symbol: 'PTON', price: '$0.000012', change: 156.8, safetyScore: 45, volume: '$2.4M', marketCap: '$12M', isTrending: true, isNew: true },
+  { name: 'Jetton', symbol: 'JETTON', price: '$0.089', change: 15.6, safetyScore: 88, volume: '$5.2M', marketCap: '$89M' },
+  { name: 'Gram', symbol: 'GRAM', price: '$0.0042', change: 8.3, safetyScore: 65, volume: '$1.8M', marketCap: '$42M' },
+  { name: 'Scale', symbol: 'SCALE', price: '$0.0015', change: -6.2, safetyScore: 58, volume: '$980K', marketCap: '$15M' },
+  { name: 'Redo', symbol: 'REDO', price: '$0.023', change: 21.1, safetyScore: 72, volume: '$3.1M', marketCap: '$23M', isTrending: true },
+  { name: 'Seal Token', symbol: 'SEAL', price: '$0.0156', change: 124.5, safetyScore: 92, volume: '$4.8M', marketCap: '$156M', isNew: true, isTrending: true },
+  { name: 'Moon Cat', symbol: 'MCAT', price: '$0.00034', change: -12.4, safetyScore: 38, volume: '$420K', marketCap: '$3.4M' },
+]
+
+const marketStats = [
+  { label: 'TON Price', value: '$2.45', change: 12.5 },
+  { label: 'Market Cap', value: '$8.4B', change: 8.2 },
+  { label: '24h Volume', value: '$124M', change: -3.1 },
+  { label: 'Active Tokens', value: '2,847', change: 15 },
+]
+---
+
+<Base title="Trending">
+  <MatrixRain client:idle />
+
+  <div class="min-h-screen flex flex-col relative z-10">
+    <Header currentPath="/crypto" />
+    <LiveTicker client:load />
+
+    <main class="flex-1 container-app py-8">
+      <!-- Page Header -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-black mb-2" style="font-family: var(--font-display);">
+            <span class="text-primary">📈</span> TRENDING TOKENS
+          </h1>
+          <p class="text-muted-foreground">Real-time TON ecosystem token tracking</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="status-live">LIVE</span>
+          <span class="px-3 py-1 bg-primary/20 border border-primary/50 rounded text-xs font-mono">
+            {trendingTokens.length} TOKENS
+          </span>
+        </div>
+      </div>
+
+      <!-- Market Stats -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {marketStats.map(stat => (
+          <div class="card-terminal">
+            <div class="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+            <div class="text-2xl font-bold font-mono text-primary mt-1">{stat.value}</div>
+            <div class:list={[
+              'text-xs mt-1',
+              stat.change >= 0 ? 'text-chart-1' : 'text-destructive'
+            ]}>
+              {stat.change >= 0 ? '↑' : '↓'} {Math.abs(stat.change)}%
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <button class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-bold">
+          ALL
+        </button>
+        <button class="px-4 py-2 border border-border rounded-md text-sm font-bold hover:border-primary/50 transition-colors">
+          🔥 HOT
+        </button>
+        <button class="px-4 py-2 border border-border rounded-md text-sm font-bold hover:border-primary/50 transition-colors">
+          🆕 NEW
+        </button>
+        <button class="px-4 py-2 border border-border rounded-md text-sm font-bold hover:border-primary/50 transition-colors">
+          💎 GEMS
+        </button>
+        <button class="px-4 py-2 border border-border rounded-md text-sm font-bold hover:border-primary/50 transition-colors">
+          ⚠️ RISKY
+        </button>
+      </div>
+
+      <!-- Token Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {trendingTokens.map(token => (
+          <TokenCard {...token} />
+        ))}
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-8">
+        <button class="btn btn-secondary px-8">
+          Load More Tokens
+        </button>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</Base>
