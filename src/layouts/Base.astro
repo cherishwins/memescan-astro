@@ -34,6 +34,19 @@ const { title, description = 'Bloomberg for Memes - TON Blockchain Scanner' } = 
 
   <!-- Telegram Mini App SDK -->
   <script is:inline src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- TON Builders Analytics SDK -->
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@telegram-apps/analytics@1/dist/index.iife.min.js"></script>
+  <script is:inline>
+    // Initialize TON Builders Analytics
+    if (window.TelegramAnalytics) {
+      window.TelegramAnalytics.init({
+        token: 'eyJhcHBfbmFtZSI6Im1lbWVzZWFsX3RvbiIsImFwcF91cmwiOiJodHRwczovL3QubWUvTWVtZVNlYWxUT05fYm90IiwiYXBwX2RvbWFpbiI6Imh0dHBzOi8vbm90YXJ5dG9uLmNvbSJ9!8ui0w9R2CzU+bHPkzuFlFFTpHkvOKH9k4r6BdJEoSKs=',
+        appName: 'memeseal_ton',
+      });
+    }
+  </script>
+
   <script is:inline>
     // Initialize Telegram Mini App
     if (window.Telegram?.WebApp) {
