@@ -1,7 +1,8 @@
 ---
 /**
  * TokenCard Component - Layer 0 (Static HTML)
- * Displays token info with safety score
+ * Displays token info, with a safety score only when one is passed.
+ * Scores are examples: only pass one for a fictional token, never a real one.
  */
 
 interface Props {
@@ -23,14 +24,16 @@ const {
   change,
   volume,
   marketCap,
-  safetyScore = 0,
+  safetyScore,
   isNew = false,
   isTrending = false,
 } = Astro.props
 
 const isPositive = change >= 0
-const safetyColor = safetyScore >= 80 ? 'text-chart-1' : safetyScore >= 50 ? 'text-chart-5' : 'text-destructive'
-const safetyLabel = safetyScore >= 80 ? 'SAFE' : safetyScore >= 50 ? 'CAUTION' : 'RISKY'
+const hasSafety = safetyScore !== undefined
+const score = safetyScore ?? 0
+const safetyColor = score >= 80 ? 'text-chart-1' : score >= 50 ? 'text-chart-5' : 'text-destructive'
+const safetyLabel = score >= 80 ? 'SAFE' : score >= 50 ? 'CAUTION' : 'RISKY'
 ---
 
 <article class="card-terminal group cursor-pointer">
@@ -50,11 +53,13 @@ const safetyLabel = safetyScore >= 80 ? 'SAFE' : safetyScore >= 50 ? 'CAUTION' :
       </div>
     </div>
 
-    <!-- Safety Score -->
-    <div class={`text-right ${safetyColor}`}>
-      <div class="text-xs font-bold">{safetyLabel}</div>
-      <div class="text-lg font-mono">{safetyScore}%</div>
-    </div>
+    <!-- Safety Score (example) -->
+    {hasSafety && (
+      <div class={`text-right ${safetyColor}`}>
+        <div class="text-xs font-bold">{safetyLabel}</div>
+        <div class="text-lg font-mono">{score}%</div>
+      </div>
+    )}
   </div>
 
   <!-- Price & Change -->

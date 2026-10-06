@@ -7,7 +7,7 @@ interface Props {
   description?: string
 }
 
-const { title, description = 'Bloomberg for Memes - TON Blockchain Scanner' } = Astro.props
+const { title, description = 'MemeScan design preview for TON meme tokens, shown with sample data. Not live market data, not financial advice.' } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -73,5 +73,18 @@ const { title, description = 'Bloomberg for Memes - TON Blockchain Scanner' } = 
 </head>
 <body class="min-h-screen bg-background text-foreground font-mono antialiased">
   <slot />
+
+  <!-- Every token, price and stat on this site is hardcoded or simulated. The
+       notice lives in the layout so no page can render without it, and it is
+       sticky so it stays on screen while scrolling. -->
+  <div
+    role="note"
+    class="sticky bottom-0 z-40 border-t-2 border-chart-5 bg-background/95 backdrop-blur pb-[env(safe-area-inset-bottom)]"
+  >
+    <p class="container-app py-2 flex items-center justify-center gap-2 text-center text-[10px] sm:text-xs font-bold uppercase tracking-wider text-chart-5">
+      <span aria-hidden="true">⚠️</span>
+      <span>Demo data — not live market data, not financial advice</span>
+    </p>
+  </div>
 </body>
 </html>
