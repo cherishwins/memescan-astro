@@ -19,20 +19,22 @@ import LiveTicker from '../components/islands/LiveTicker'
 // Layer 2: Three.js Magic
 import MatrixRain from '../components/magic/MatrixRain'
 
-// Static data - in production, fetch at build time from API
+// Fictional example tokens. None of these are real projects: the names,
+// prices and safety scores are made up to show the layout. Never put a safety
+// score next to a real token name, ticker or address.
 const trendingTokens = [
-  { name: 'PEPE TON', symbol: 'PEPE', price: '$0.00042', change: 15.4, safetyScore: 85, volume: '$1.2M', marketCap: '$4.2M', isTrending: true },
-  { name: 'Frog Coin', symbol: 'FROG', price: '$0.0012', change: -5.2, safetyScore: 72, volume: '$890K', marketCap: '$2.1M' },
-  { name: 'Moon Dog', symbol: 'MDOG', price: '$0.00089', change: 42.1, safetyScore: 45, volume: '$2.4M', marketCap: '$8.5M', isTrending: true },
-  { name: 'TON Cat', symbol: 'TCAT', price: '$0.0034', change: 8.7, safetyScore: 91, volume: '$560K', marketCap: '$1.8M' },
-  { name: 'Seal Token', symbol: 'SEAL', price: '$0.0156', change: 124.5, safetyScore: 88, volume: '$3.2M', marketCap: '$12.4M', isNew: true, isTrending: true },
-  { name: 'Rug Pull', symbol: 'RUG', price: '$0.00001', change: -89.2, safetyScore: 12, volume: '$45K', marketCap: '$120K' },
+  { name: 'Example Frog', symbol: 'EX-FROG', price: '$0.00042', change: 15.4, safetyScore: 85, volume: '$1.2M', marketCap: '$4.2M', isTrending: true },
+  { name: 'Example Seal', symbol: 'EX-SEAL', price: '$0.0012', change: -5.2, safetyScore: 72, volume: '$890K', marketCap: '$2.1M' },
+  { name: 'Example Rocket', symbol: 'EX-ROCKET', price: '$0.00089', change: 42.1, safetyScore: 45, volume: '$2.4M', marketCap: '$8.5M', isTrending: true },
+  { name: 'Example Cat', symbol: 'EX-CAT', price: '$0.0034', change: 8.7, safetyScore: 91, volume: '$560K', marketCap: '$1.8M' },
+  { name: 'Example Whale', symbol: 'EX-WHALE', price: '$0.0156', change: 124.5, safetyScore: 88, volume: '$3.2M', marketCap: '$12.4M', isNew: true, isTrending: true },
+  { name: 'Example Moon', symbol: 'EX-MOON', price: '$0.00001', change: -89.2, safetyScore: 12, volume: '$45K', marketCap: '$120K' },
 ]
 
 const newLaunches = [
-  { name: 'Galaxy Doge', symbol: 'GDOGE', price: '$0.00001', change: 0, safetyScore: 50, isNew: true },
-  { name: 'TON Wizard', symbol: 'TWIZ', price: '$0.00025', change: 15.2, safetyScore: 65, isNew: true },
-  { name: 'Meme Lord', symbol: 'MLORD', price: '$0.00008', change: -12.5, safetyScore: 38, isNew: true },
+  { name: 'Example Lily', symbol: 'EX-LILY', price: '$0.00001', change: 0, safetyScore: 50, isNew: true },
+  { name: 'Example Pond', symbol: 'EX-POND', price: '$0.00025', change: 15.2, safetyScore: 65, isNew: true },
+  { name: 'Example Tadpole', symbol: 'EX-TADPOLE', price: '$0.00008', change: -12.5, safetyScore: 38, isNew: true },
 ]
 ---
 
@@ -44,7 +46,7 @@ const newLaunches = [
     <!-- Layer 0: Static Header -->
     <Header currentPath="/" />
 
-    <!-- Layer 1: Live Ticker (loads immediately, above fold) -->
+    <!-- Layer 1: Sample price ticker (loads immediately, above fold) -->
     <LiveTicker client:load />
 
     <main class="flex-1">
@@ -56,9 +58,9 @@ const newLaunches = [
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-bold flex items-center gap-2">
             <span class="text-2xl">🔥</span>
-            TRENDING NOW
+            TRENDING PREVIEW
           </h2>
-          <span class="status-live">LIVE</span>
+          <span class="badge badge-warning font-bold whitespace-nowrap">EXAMPLES</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -72,14 +74,14 @@ const newLaunches = [
       <section class="container-app py-8 border-t border-border">
         <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
           <span class="text-2xl">📊</span>
-          SCANNER STATS
+          PREVIEW STATUS
         </h2>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Tokens Scanned" value="2,847" change={12} variant="default" />
-          <StatCard label="Rugs Detected" value="127" change={-5} variant="danger" />
-          <StatCard label="Gems Found" value="48" change={23} variant="success" />
-          <StatCard label="Active Users" value="1.2K" change={8} variant="default" />
+          <StatCard label="Token Scanner" value="Preview" variant="default" />
+          <StatCard label="Rug Checks" value="Not live" variant="warning" />
+          <StatCard label="Token Data" value="Sample" variant="success" />
+          <StatCard label="Prices" value="Not live" variant="default" />
         </div>
       </section>
 
@@ -121,7 +123,7 @@ const newLaunches = [
           <a href="https://t.me/MemeScanTON_bot" target="_blank" class="card-terminal text-center hover:border-primary/50 group">
             <span class="text-3xl mb-2 block group-hover:scale-110 transition-transform">🤖</span>
             <span class="font-bold text-sm">TELEGRAM BOT</span>
-            <p class="text-xs text-muted-foreground mt-1">Scan on Mobile</p>
+            <p class="text-xs text-muted-foreground mt-1">Open in Telegram</p>
           </a>
         </div>
       </section>

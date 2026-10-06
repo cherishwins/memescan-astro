@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'SCAN. ANALYZE. PROFIT.',
-  subtitle = 'Real-time intelligence for TON meme tokens'
+  title = 'SCAN. ANALYZE. DYOR.',
+  subtitle = 'A design preview of a TON meme token dashboard. Every token and number here is sample data.'
 } = Astro.props
 ---
 
@@ -41,7 +41,7 @@ const {
           rel="noopener noreferrer"
           class="btn btn-primary text-lg px-8 py-4 neon-glow"
         >
-          🔍 LAUNCH SCANNER
+          🤖 TELEGRAM BOT
         </a>
         <a
           href="https://x.com/MemeSealTON"
@@ -53,19 +53,19 @@ const {
         </a>
       </div>
 
-      <!-- Stats row -->
+      <!-- Status row: what is and isn't real on this site -->
       <div class="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto">
         <div class="text-center">
-          <p class="text-2xl sm:text-3xl font-bold text-primary font-mono">2,847</p>
-          <p class="text-xs text-muted-foreground">Tokens Scanned</p>
+          <p class="text-base sm:text-3xl font-bold text-primary font-mono">PREVIEW</p>
+          <p class="text-xs text-muted-foreground">Scanner</p>
         </div>
         <div class="text-center">
-          <p class="text-2xl sm:text-3xl font-bold text-destructive font-mono">127</p>
-          <p class="text-xs text-muted-foreground">Rugs Detected</p>
+          <p class="text-base sm:text-3xl font-bold text-chart-5 font-mono">NOT LIVE</p>
+          <p class="text-xs text-muted-foreground">Rug Checks</p>
         </div>
         <div class="text-center">
-          <p class="text-2xl sm:text-3xl font-bold text-chart-1 font-mono">48</p>
-          <p class="text-xs text-muted-foreground">Gems Found</p>
+          <p class="text-base sm:text-3xl font-bold text-chart-1 font-mono">SAMPLE</p>
+          <p class="text-xs text-muted-foreground">Token Data</p>
         </div>
       </div>
     </div>

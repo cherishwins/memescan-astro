@@ -12,27 +12,30 @@ import TokenCard from '../components/static/TokenCard.astro'
 import LiveTicker from '../components/islands/LiveTicker'
 import MatrixRain from '../components/magic/MatrixRain'
 
-// Static trending data
+// Fictional example tokens. None of these are real projects: the names,
+// prices and safety scores are made up to show the layout. Never put a safety
+// score next to a real token name, ticker or address.
 const trendingTokens = [
-  { name: 'TON', symbol: 'TON', price: '$2.45', change: 12.5, safetyScore: 98, volume: '$124M', marketCap: '$8.4B', isTrending: true },
-  { name: 'NOT', symbol: 'NOT', price: '$0.0089', change: 45.2, safetyScore: 85, volume: '$42M', marketCap: '$890M', isTrending: true },
-  { name: 'DOGS', symbol: 'DOGS', price: '$0.00042', change: -3.2, safetyScore: 72, volume: '$18M', marketCap: '$420M' },
-  { name: 'Hamster Kombat', symbol: 'HMSTR', price: '$0.0037', change: 8.7, safetyScore: 78, volume: '$12M', marketCap: '$370M' },
-  { name: 'Catizen', symbol: 'CATI', price: '$0.0046', change: -1.2, safetyScore: 82, volume: '$8.5M', marketCap: '$460M' },
-  { name: 'PEPE TON', symbol: 'PTON', price: '$0.000012', change: 156.8, safetyScore: 45, volume: '$2.4M', marketCap: '$12M', isTrending: true, isNew: true },
-  { name: 'Jetton', symbol: 'JETTON', price: '$0.089', change: 15.6, safetyScore: 88, volume: '$5.2M', marketCap: '$89M' },
-  { name: 'Gram', symbol: 'GRAM', price: '$0.0042', change: 8.3, safetyScore: 65, volume: '$1.8M', marketCap: '$42M' },
-  { name: 'Scale', symbol: 'SCALE', price: '$0.0015', change: -6.2, safetyScore: 58, volume: '$980K', marketCap: '$15M' },
-  { name: 'Redo', symbol: 'REDO', price: '$0.023', change: 21.1, safetyScore: 72, volume: '$3.1M', marketCap: '$23M', isTrending: true },
-  { name: 'Seal Token', symbol: 'SEAL', price: '$0.0156', change: 124.5, safetyScore: 92, volume: '$4.8M', marketCap: '$156M', isNew: true, isTrending: true },
-  { name: 'Moon Cat', symbol: 'MCAT', price: '$0.00034', change: -12.4, safetyScore: 38, volume: '$420K', marketCap: '$3.4M' },
+  { name: 'Example Frog', symbol: 'EX-FROG', price: '$0.0245', change: 12.5, safetyScore: 98, volume: '$124K', marketCap: '$8.4M', isTrending: true },
+  { name: 'Example Seal', symbol: 'EX-SEAL', price: '$0.0089', change: 45.2, safetyScore: 85, volume: '$42K', marketCap: '$890K', isTrending: true },
+  { name: 'Example Rocket', symbol: 'EX-ROCKET', price: '$0.00042', change: -3.2, safetyScore: 72, volume: '$18K', marketCap: '$420K' },
+  { name: 'Example Cat', symbol: 'EX-CAT', price: '$0.0037', change: 8.7, safetyScore: 78, volume: '$12K', marketCap: '$370K' },
+  { name: 'Example Whale', symbol: 'EX-WHALE', price: '$0.0046', change: -1.2, safetyScore: 82, volume: '$8.5K', marketCap: '$460K' },
+  { name: 'Example Moon', symbol: 'EX-MOON', price: '$0.000012', change: 156.8, safetyScore: 45, volume: '$2.4K', marketCap: '$12K', isTrending: true, isNew: true },
+  { name: 'Example Pixel', symbol: 'EX-PIXEL', price: '$0.089', change: 15.6, safetyScore: 88, volume: '$5.2K', marketCap: '$89K' },
+  { name: 'Example Comet', symbol: 'EX-COMET', price: '$0.0042', change: 8.3, safetyScore: 65, volume: '$1.8K', marketCap: '$42K' },
+  { name: 'Example Lily', symbol: 'EX-LILY', price: '$0.0015', change: -6.2, safetyScore: 58, volume: '$980', marketCap: '$15K' },
+  { name: 'Example Pond', symbol: 'EX-POND', price: '$0.023', change: 21.1, safetyScore: 72, volume: '$3.1K', marketCap: '$23K', isTrending: true },
+  { name: 'Example Lotus', symbol: 'EX-LOTUS', price: '$0.0156', change: 124.5, safetyScore: 92, volume: '$4.8K', marketCap: '$156K', isNew: true, isTrending: true },
+  { name: 'Example Tadpole', symbol: 'EX-TADPOLE', price: '$0.00034', change: -12.4, safetyScore: 38, volume: '$420', marketCap: '$3.4K' },
 ]
 
+// What the page is showing, not market statistics
 const marketStats = [
-  { label: 'TON Price', value: '$2.45', change: 12.5 },
-  { label: 'Market Cap', value: '$8.4B', change: 8.2 },
-  { label: '24h Volume', value: '$124M', change: -3.1 },
-  { label: 'Active Tokens', value: '2,847', change: 15 },
+  { label: 'Tokens Shown', value: String(trendingTokens.length) },
+  { label: 'Token Data', value: 'Sample' },
+  { label: 'Prices', value: 'Not live' },
+  { label: 'Safety Scores', value: 'Examples' },
 ]
 ---
 
@@ -50,10 +53,10 @@ const marketStats = [
           <h1 class="text-3xl sm:text-4xl font-black mb-2" style="font-family: var(--font-display);">
             <span class="text-primary">📈</span> TRENDING TOKENS
           </h1>
-          <p class="text-muted-foreground">Real-time TON ecosystem token tracking</p>
+          <p class="text-muted-foreground">Example token cards: fictional tokens, sample data</p>
         </div>
         <div class="flex items-center gap-2">
-          <span class="status-live">LIVE</span>
+          <span class="badge badge-warning font-bold">EXAMPLE TOKENS</span>
           <span class="px-3 py-1 bg-primary/20 border border-primary/50 rounded text-xs font-mono">
             {trendingTokens.length} TOKENS
           </span>
@@ -65,13 +68,7 @@ const marketStats = [
         {marketStats.map(stat => (
           <div class="card-terminal">
             <div class="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
-            <div class="text-2xl font-bold font-mono text-primary mt-1">{stat.value}</div>
-            <div class:list={[
-              'text-xs mt-1',
-              stat.change >= 0 ? 'text-chart-1' : 'text-destructive'
-            ]}>
-              {stat.change >= 0 ? '↑' : '↓'} {Math.abs(stat.change)}%
-            </div>
+            <div class="text-xl sm:text-2xl font-bold font-mono text-primary mt-1">{stat.value}</div>
           </div>
         ))}
       </section>
