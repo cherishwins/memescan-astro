@@ -1,4 +1,10 @@
-# MemeScan (Astro) - design preview with sample data
+# LEGACY: MemeScan (Astro) - design preview with sample data
+
+> **LEGACY REPOSITORY. Not under active development.**
+> The only active repo is **[cherishwins/x402-facilitator](https://github.com/cherishwins/x402-facilitator)**. Work there.
+> MemeScan, ported to Astro: a static design preview with sample data. No live data and no users.
+> Marked legacy 20 October 2026 so this repo stops being opened by mistake. Archive it in Settings when convenient.
+
 
 MemeScan is a static **design preview** of a meme token dashboard for TON,
 built with Astro and a few React islands. It is not a working scanner.
